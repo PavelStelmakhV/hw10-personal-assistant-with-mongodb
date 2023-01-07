@@ -1,8 +1,6 @@
-# hw9-personal-assistant-with-sqlalchemy-and-alembic
-
                                 ***UA***
 
-Це персональний помічник з інтерфейсом командного рядкаб версія 0.1.0.
+Це персональний помічник з інтерфейсом командного рядкаб версія 0.1.1.
 
 Нижче наведені основні можливості "Асистента":
 
@@ -31,7 +29,7 @@
 CLI Асистент має наступні функції: вітається з юзером, додавання запису до адресної книги, видалення запису, редагування запису, виведення контактів з адресної книги, виведення контактів з днями народження в задану кількість днів, додавання нотатки до записника, видалення нотатки, редагування нотатки, пошук нотатки, виведення нотатки, зміна тегу нотатки, виведення нотатки за тегом, пошук нотатки затегом, сортування файлів в папці за категоріями.
 Також, в будь-який момент доступна команда "help" яка виводить список всіх доступних команд програми з коротким їх описом.
 
-Программа створює файл 'assistant.db' в папці користувача, в якому зберігає всі контакти і нотатки 
+В файлі \assistant\assistant\database\connect.py є можливість вибрати з'єднання до локальної бази данних MongoDB або до ресурсу https://cloud.mongodb.com/
 
 Дякуємо за Ваш вибір нашого продукту. Бажаємо приємного користування!
 _______________________________________________________________________________
@@ -67,6 +65,6 @@ To start the program, simply type command "assistant" in the console in any plac
 CLI Assistan has the following options: welcoming the user, add record to the addressbook, delete record, edit record, search for the Record, show the Records in Addressbook, show contacts with birthdays within a certain timeframe, add note to the notebook, delete note, edit note's text, find note, show note, change tag, show note by tag, find note by tag, sort files in a folder by categories.
 Also, at any time you can use command "help" to see the list of all supported commands with their description.
 
-The program creates a file 'assistant.db' in the user's folder, in which it stores all contacts and notes
+In the \assistant\assistant\database\connect.py file, you can choose to connect to the local MongoDB database or to the resource https://cloud.mongodb.com/
 
-Thanks for downloading and enjoy using the "Assistant" by PRDD.
+Thanks for downloading and enjoy using the "Assistant"
