@@ -17,14 +17,14 @@ def parser_handler(func):
 def command_handler(func):
     @functools.wraps(func)
     def wrapper(*args):
-        # return func(*args)
-        try:
-            return func(*args)
-        except ValueError as e:
-            return str(e)
-        except KeyError as e:
-            return str(e)
-        except Exception as e:
-            raise SystemExit(f"Good bye! (some exception: {e})")
+        return func(*args)
+        # try:
+        #     return func(*args)
+        # except ValueError as e:
+        #     return str(e)
+        # except KeyError as e:
+        #     return str(e)
+        # except Exception as e:
+        #     raise SystemExit(f"Good bye! (some exception: {e})")
 
     return wrapper

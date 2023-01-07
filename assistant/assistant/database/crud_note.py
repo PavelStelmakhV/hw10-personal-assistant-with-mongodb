@@ -17,15 +17,6 @@ def exist_tag(name: str) -> bool:
     return Tag.objects(name=name).count()
 
 
-# def exist_tag(name: str) -> bool:
-#     return session.query(Tag).filter(Tag.name == name).count()
-
-
-# def get_note_by_num(num=0):
-#     note = session.query(Note).offset(num).limit(1).all()
-#     return note
-
-
 def get_note_by_name(title):
     note = Note.objects(title=title)
     return note[0]
@@ -104,29 +95,4 @@ def find_note_by_tag(tag_name: str):
 
 if __name__ == '__main__':
     pass
-    # print(Note.objects(tags=[]))
-    # tag = Tag.objects(name='note_3')
-    # print(Note.objects(tags=tag).count())
-    # tag = Tag.objects(name='tag_4')
-    # print(tag)
-    # if Tag.objects(name='tag_4').count():
-    #     tag = Tag.objects(name='tag_4').get()
-    # else:
-    #     tag = Tag(name='tag_4').save()
-    # create_note(title='second', description='second description', tags_list=['tag_3', 'tag_2'])
-
-    # n = get_note_by_name('first')
-    # print(n.title)
-    # for nn in n:
-    #     print(nn.title)
-    # print(exist_note(title='second_'))
-    # notes = Note.objects(Q(title__contains='second') | Q(description__contains='first_'))
-    # print(notes)
-    # for note in notes:
-    #     print(note.title, note.description)
-    # try:
-    #     note_ = Note(title='first', description='first note', tags=['1', ]).save()
-    # except DuplicateKeyError as err:
-    #     print(err)
-
 

@@ -1,4 +1,3 @@
-from collections import UserDict
 from datetime import datetime, timedelta
 
 from database import crud_contact
@@ -117,6 +116,18 @@ class Record:
         # result += '\n'
         return result
 
+    def exist_record(self):
+        return False if self._get_id_() == "" else True
+
+    def _get_id_(self):
+        if self.name is None:
+            return ""
+        if crud_contact.exist_contact(full_name=self.name.value):
+            contact = crud_contact.get_contact_by_name(self.name.value)
+            return contact.id
+        else:
+            return ""
+
     def put_record_to_db(self):
         contact = crud_contact.create_contact(
             full_name=self.name.value if self.name is not None else None,
@@ -128,19 +139,9 @@ class Record:
         for phone in self.phone_list:
             crud_contact.create_phone(contact_id=contact.id, cell_phone=phone.value)
 
-    def _get_id_(self):
-        contact = crud_contact.get_contact_by_name(self.name.value if self.name is not None else None)
-        if contact is not None:
-            return contact.id
-        else:
-            return -1
-
-    def exist_record(self):
-        return False if self._get_id_() < 0 else True
-
     def get_record_from_db(self, num_contact: int = None):
-        if self.id_ < 0:
-            contact = crud_contact.get_contact_by_num(num=num_contact)[0]
+        if self.id_ == "":
+            contact = crud_contact.get_contact_by_num(num=num_contact)
         else:
             contact = crud_contact.get_contact_by_id(self.id_)
         self.extract_contact(contact)
@@ -148,7 +149,7 @@ class Record:
     def extract_contact(self, contact):
         self.name = Name(contact.full_name)
         for phone in contact.phones:
-            self.phone_list.append(Phone(phone.cell_phone, verify=False))
+            self.phone_list.append(Phone(phone, verify=False))
         if contact.email is not None:
             self.email = Email(contact.email)
         if contact.address is not None:
@@ -320,32 +321,10 @@ class AddressBook():
 
 if __name__ == '__main__':
 
-    # book = AddressBook()
-    #
-    # if crud_contact.get_count() == 0:
-    #     print('Phone book is empty')
-
     rec = Record(Name('Misha_3'))
-    # print(rec.email)
+
     rec.put_record_to_db()
 
-    # max_line = 7
-    # result_ = 'Phone book:\n'
-    # num_page = 0
-    # for page in book.iterator(max_line=max_line):
-    #     num_page += 1
-    #     result_ += f'<< page {num_page} >>\n' if max_line < crud_contact.get_count() else ''
-    #     result_ += page
-    # print(result_)
 
-    # r = book.add_record(name=Name('Misha_6'), phone=Phone('+380961234567'), address=Address('За углом'),
-    #                 email=Email('qwerty@ukr.net'), birthday=Birthday('10.11.2000'))
-    # print(r)
-    # r = book.edit_record(name=Name('Misha_6'), operation='_del_phone', old_phone=Phone('+380501111111'))
-    # print(r)
-
-    # r = book.remove_record(name`=Name('Misha_6'))
-    # print(r)
-    # print(book.show_record_with_birthday(18))
 
 

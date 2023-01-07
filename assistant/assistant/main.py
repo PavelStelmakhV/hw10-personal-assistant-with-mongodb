@@ -73,7 +73,7 @@ class InputOutput:
         else:
             tag = self._io.user_input('Input remove tag: ')
             return self.notebook.edit_note_tag_del(argument, tag)
-    # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    # -----------------------------------------------------------
 
     @command_handler
     def note_edit_handler(self, name_note: str) -> str:
@@ -104,7 +104,7 @@ class InputOutput:
     @command_handler
     def note_show_handler(self, argument: str) -> str:
         return self.notebook.show_note(argument)
-    # -------------------------------------------------
+    # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< contact >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     @command_handler
     def contact_add_handler(self, argument: str) -> str:

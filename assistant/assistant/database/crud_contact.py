@@ -1,24 +1,29 @@
+from mongoengine import Q
+from pymongo.errors import DuplicateKeyError
 
 import assistant.assistant.database.connect
 from assistant.assistant.database.models import Contact
+
+
+def exist_contact(full_name):
+    return Contact.objects(full_name=full_name).count()
 
 
 def get_count():
     return Contact.objects.count()
 
 
-# def get_contact_by_num(num=0):
-#     contact = session.query(Contact).offset(num).limit(1).all()
-#     return contact
+def get_contact_by_num(num=0):
+    return Contact.objects[num]
 
 
 def get_contact_by_name(full_name):
-    contact = session.query(Contact).filter(Contact.full_name == full_name).first()
+    contact = Contact.objects(full_name=full_name).get()
     return contact
 
 
-def get_contact_by_id(id_: int):
-    return session.query(Contact).get(id_)
+def get_contact_by_id(id_):
+    return Contact.objects(id=id_).get()
 
 
 def create_contact(full_name, email=None, address=None, birthday=None, phones=None):
@@ -26,42 +31,34 @@ def create_contact(full_name, email=None, address=None, birthday=None, phones=No
     return contact
 
 
-def create_phone(contact_id: int, cell_phone: str):
-    phone = Phone(cell_phone=cell_phone, contact_id=contact_id)
-    session.add(phone)
-    session.commit()
+def create_phone(contact_id: str, cell_phone: str):
+    Contact.objects(id=contact_id).update_one(push__phones=cell_phone)
 
 
-def delete_phone(contact_id: int, cell_phone: str):
-    phone = session.query(Phone).filter(and_(Phone.cell_phone == cell_phone, Phone.contact_id == contact_id)).first()
-    session.delete(phone)
-    session.commit()
+def delete_phone(contact_id: str, cell_phone: str):
+    print()
+    Contact.objects(id=contact_id).update_one(pull__phones=cell_phone)
 
 # ----------------------------------------------------------------------------------
 
 
-def update_contact(id_: int, email: str = None, address: str = None, birthday=None):
-    contact = session.query(Contact).get(id_)
+def update_contact(id_: str, email: str = None, address: str = None, birthday=None):
+    contact = Contact.objects(id=id_).get()
     if email is not None:
-        contact.email = email
+        Contact.objects(id=id_).update_one(email=email)
     if address is not None:
-        contact.address = address
+        Contact.objects(id=id_).update_one(address=address)
     if birthday is not None:
-        contact.birthday = birthday
-    session.add(contact)
-    session.commit()
+        Contact.objects(id=id_).update_one(birthday=birthday)
     return contact
 
 
 def remove_contact(contact_id: int):
-    session.query(Contact).filter(Contact.id == contact_id).delete()
-    session.query(Phone).filter(Phone.contact_id == contact_id).delete()
-    session.commit()
+    Contact.objects(id=contact_id).delete()
 
 
 def find_contact(find_text: str):
-    contact = session.query(Contact).filter(Contact.full_name.like(f'%{find_text}%')).all()
-    return contact
+    return Contact.objects(full_name__icontains=find_text)
 
 
 if __name__ == '__main__':
@@ -70,5 +67,8 @@ if __name__ == '__main__':
     # print(contacts.id)
     # for c in contacts:
     #     print(f'{c.full_name}, {c.email}, {[t.cell_phone for t in c.phones]}')
-    print(find_contact(''))
+    # print(get_contact_by_id(id_='63b72a0a65b3762751478a91'))
+    con = get_contact_by_name(full_name='Натан Гертрудович Фадеев')
+    print(con.id)
+    print(get_contact_by_id(id_=con.id))
 
