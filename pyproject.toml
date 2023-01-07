@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "hw10-personal-assistant-with-mongodb"
+version = "0.1.0"
+description = ""
+authors = ["PavelStelmakhV <stelmahpv13@gmail.com>"]
+readme = "README.md"
+packages = [{include = "hw10_personal_assistant_with_mongodb"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+mongoengine = "^0.25.0"
+faker = "^15.3.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
